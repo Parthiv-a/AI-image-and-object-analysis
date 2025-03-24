@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="centered-page">
+    <video autoplay muted loop class="video-background">
+        <source src="{{ url_for('static', filename='uploads/background2.mp4') }}" type="video/mp4">
+    </video>
+    
+    <div class="container">
+        <h1>IMAGE ANALYZER</h1>
+        {% if current_user.is_authenticated %}
+            <p>Welcome back, {{ current_user.username }}!</p>
+            <div class="button-group">
+                <a href="{{ url_for('profile') }}" class="button">GO TO PROFILE</a>
+                <a href="{{ url_for('logout') }}" class="button">LOGOUT</a>
+            </div>
+        {% else %}
+            <p>Start analyzing your images with AI-powered tools</p>
+            <div class="button-group">
+                <a href="{{ url_for('login') }}" class="button">LOGIN</a>
+                <a href="{{ url_for('register') }}" class="button">REGISTER</a>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

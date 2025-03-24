@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <video autoplay muted loop class="video-background">
+        <source src="{{ url_for('static', filename='uploads/background2.mp4') }}" type="video/mp4">
+    </video>
+    
+    <div class="scroll-container">
+        <div class="container results-transition">
+            <h1>Analysis Results</h1>
+            <div class="result-container">
+                {% if comparison_result %}
+                    <h2>Comparison Result:</h2>
+                    <p>{{ comparison_result }}</p>
+                {% else %}
+                    <!-- Display the analyzed image -->
+                    <img src="data:image/jpeg;base64,{{ image_base64 }}" alt="Analyzed Image" class="result-image">
+                    
+                    <!-- Display the analysis results -->
+                    <div class="analysis-results">
+                        <h2>Description:</h2>
+                        <p>{{ analysis.description }}</p>
+                        <h2>Tags:</h2>
+                        <ul>
+                            {% for tag in analysis.tags %}
+                            <li>{{ tag.name }} ({{ tag.confidence }})</li>
+                            {% endfor %}
+                        </ul>
+                        <h2>Categories:</h2>
+                        <ul>
+                            {% for category in analysis.categories %}
+                            <li>{{ category.name }} ({{ category.confidence }})</li>
+                            {% endfor %}
+                        </ul>
+                        <h2>Objects:</h2>
+                        <ul>
+                            {% for obj in analysis.objects %}
+                            <li>{{ obj.name }} ({{ obj.confidence }})</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+            <a href="{{ url_for('profile') }}" class="button">Back to Profile</a>
+        </div>
+    </div>
+</body>
+</html>

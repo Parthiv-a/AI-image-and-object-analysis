@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <video autoplay muted loop class="video-background">
+        <source src="{{ url_for('static', filename='uploads/background2.mp4') }}" type="video/mp4">
+    </video>
+    
+    <div class="container">
+        <h1>WELCOME, {{ user.username }}!</h1>
+        
+        <h2>UPLOAD AN IMAGE</h2>
+        <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept="image/*" required>
+            <button type="submit" class="button">UPLOAD IMAGE</button>
+        </form>
+
+        <h2>COMPARE IMAGES</h2>
+        <form action="{{ url_for('compare') }}" method="post" enctype="multipart/form-data">
+            <input type="file" name="file1" accept="image/*" required>
+            <input type="file" name="file2" accept="image/*" required>
+            <button type="submit" class="button">COMPARE IMAGES</button>
+        </form>
+
+        <h2>YOUR UPLOADED IMAGES</h2>
+        <div class="image-grid">
+            {% for image in images %}
+            <div class="image-item">
+                <img src="data:image/jpeg;base64,{{ image }}" alt="Uploaded Image" class="uploaded-image">
+                <a href="{{ url_for('analyze', image_index=loop.index0) }}" class="button">ANALYZE</a>
+            </div>
+            {% endfor %}
+        </div>
+
+        <a href="{{ url_for('logout') }}" class="button">LOGOUT</a>
+    </div>
+</body>
+</html>
